@@ -11,6 +11,7 @@ class App extends Component {
     super();
     this.state = {
       loggedIn: false,
+      activePage: "browse"
     }
   };
 
@@ -21,7 +22,7 @@ class App extends Component {
           <TitleBar currentTitle="Home Page"/>
           <NavBar />
           {/* Route to different views */}
-          <ShowPage />
+          <ShowPage activePage={this.state.activePage}/>
         </div>
       </Router>
     )

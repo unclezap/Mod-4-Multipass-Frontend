@@ -6,6 +6,7 @@ function NavBar(props) {
         <div>
         <NavLink to='/' active={props} >Home</NavLink>
         <NavLink to='/account' active={props}>My Account</NavLink>
+        <NavLink to='/browseAll' active={props}>Browse</NavLink>
         {/* NavLink to different ShowPage Views */}
         {/* NavLink to different ShowPage Views */}
         {/* NavLink to different ShowPage Views */}
