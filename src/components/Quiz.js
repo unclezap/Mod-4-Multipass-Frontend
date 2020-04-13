@@ -1,14 +1,16 @@
 import React from 'react';
-import {API} from '../API';
+import { api } from '../api';
 
 
 function Quiz(props) {
     function makeQuiz(props) {
-        API.getQuestions()
-    }
+        // console.log(props)
+        api.quizzes.getQuestions(props.match.params.id).then(data=> console.log(`Question data: ${data}`))
+    };
+
     return (
         <div>
-            {makeQuiz}
+            {makeQuiz(props)}
         </div>
     )
 }

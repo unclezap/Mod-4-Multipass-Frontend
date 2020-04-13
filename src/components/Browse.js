@@ -6,7 +6,7 @@ function Browse(props) {
 
     function allQuizzes() {
         return props.allQuizzes.map((thisQuiz) => {
-            return <QuizCard quiz={thisQuiz} />
+            return <QuizCard key={thisQuiz.id} quiz={thisQuiz} />
         })
     }
     

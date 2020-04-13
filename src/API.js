@@ -16,9 +16,9 @@ const getQuizzes = () => {
     .then(response => response.json())
 }
 
-const getQuestions = () => {
+const getQuestions = (quiz_id) => {
     //some sort of logic to determine which questions
-    return fetch(`${API_ROOT}/questions`, {headers: headers()})
+    return fetch(`${API_ROOT}/questions/${quiz_id}`, {headers: headers()})
     .then(response => response.json())
 }
 //might have the answers come through questions in the serializer instead
@@ -51,7 +51,7 @@ const getCurrentUser = () => {
   });
 };
 
-export const API = {
+export const api = {
   auth: {
     login,
     getCurrentUser
