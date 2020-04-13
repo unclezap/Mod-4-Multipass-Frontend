@@ -5,8 +5,8 @@ import QuizCard from './QuizCard'
 function Browse(props) {
 
     function allQuizzes() {
-        return props.quizzes.map((quiz) => {
-            return <QuizCard props={quiz} />
+        return props.allQuizzes.map((thisQuiz) => {
+            return <QuizCard quiz={thisQuiz} />
         })
     }
     

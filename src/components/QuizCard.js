@@ -1,4 +1,6 @@
 import React from "react"
+import { Link } from "react-router-dom"
+
 
 function QuizCard(props) {
 
@@ -8,7 +10,7 @@ function QuizCard(props) {
 
         //note: fix the link for heroku functionality
         <div>
-            <h2><a href={`http://localhost:3000/quiz/${id}`}>{title}</a></h2>
+            <h2><Link to={`/quizzes/${id}`}>{title}</Link></h2>
             <h4>{description}</h4>
             {/* {quiz questions} */}
             <h5>{category}</h5>

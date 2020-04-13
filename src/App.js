@@ -22,6 +22,7 @@ class App extends Component {
           <TitleBar currentTitle="Home Page"/>
           <NavBar />
           {/* Route to different views */}
+          {/*<Route exact path="/quizzes/" render={()}>< */}
           <ShowPage activePage={this.state.activePage}/>
         </div>
       </Router>

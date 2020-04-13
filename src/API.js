@@ -51,7 +51,7 @@ const getCurrentUser = () => {
   });
 };
 
-export const api = {
+export const API = {
   auth: {
     login,
     getCurrentUser
