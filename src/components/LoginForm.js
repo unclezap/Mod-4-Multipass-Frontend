@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { api } from '../api';
+import AuthHOC from '../HOC/AuthHOC'
+
 class LoginForm extends Component {
     constructor(){
         super()
         this.state = {
             error: false,
-            loggedIn: false,
             fields: {
                 username: "",
                 password: ""
@@ -17,12 +18,10 @@ class LoginForm extends Component {
             if (data.error) {
                 this.setState({
                     error: data.error
-                }, () => console.log("you hit the error!"))
+                }, () => console.log("you hit the login error!"))
             } else {
-               console.log(data)
-               this.setState({
-                   loggedIn: true
-               })
+            localStorage.setItem("token", data.jwt)
+            this.props.onAuthenticate(data)
             }
         })
     };
@@ -51,40 +50,15 @@ class LoginForm extends Component {
         )
     }
 
-    handleLogout(e) {
-        e.preventDefault()
-        console.log("You're logged out")
-        localStorage.removeItem("token");
-        this.setState({
-            error: false,
-            loggedIn: false,
-            fields: {
-                username: "",
-                password: ""
-            }
-        });
-      }
-
-    showLogoutButton() {
-        return (
-            <div>
-                <form onSubmit={e => this.handleLogout(e)}>
-                    <button type="submit">Logout</button>
-                </form>
-            </div>
-        )
-    }
 
 
 
     render() {
         return(
             <div>
-                {this.state.loggedIn === true? this.showLogoutButton():this.showLoginButton()}
-                {/* {this.state.error ? <h1>{this.state.error}</h1> : null} */}
-                
+                {this.showLoginButton()}
             </div>
         )
     }
 };
-export default LoginForm;
+export default AuthHOC(LoginForm);

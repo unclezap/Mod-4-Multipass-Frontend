@@ -5,7 +5,7 @@ import LoginForm from '../components/LoginForm';
 function NavBar(props) {
     return(
         <div>
-        <LoginForm />
+            {localStorage.getItem("token")? <button onClick={props.onLogout}>Logout</button>:<LoginForm onAuthenticate={props.onAuthenticate}/>}
         <NavLink to='/' active={props}> Home</NavLink><br />
         <NavLink to='/account' active={props}>My Account</NavLink><br />
         <NavLink to='/browse' active={props}>Browse</NavLink><br />
