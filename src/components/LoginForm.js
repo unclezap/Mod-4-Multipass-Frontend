@@ -6,6 +6,7 @@ class LoginForm extends Component {
         super()
         this.state = {
             error: false,
+            loggedIn: false,
             fields: {
                 username: "",
                 password: ""
@@ -17,10 +18,13 @@ class LoginForm extends Component {
         api.auth.login(fields).then(data => {
             if (data.error) {
                 this.setState({
-                    error: data.errors
-                })
+                    error: data.error
+                }, () => console.log("you hit the error!"))
             } else {
-               console.log("You've logged in brother")
+               console.log(data)
+               this.setState({
+                   loggedIn: true
+               })
             }
         })
     };
@@ -40,6 +44,7 @@ class LoginForm extends Component {
     render() {
         return(
             <div>
+                {this.state.loggedIn === true? <h1>You're logged in</h1>:<h1>Logged OUt</h1>}
                 {this.state.error ? <h1>{this.state.error}</h1> : null}
                 <div>
                     <form onSubmit={e => this.handleSubmit(e)}> 
