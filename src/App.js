@@ -12,20 +12,35 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      loggedIn: false,
-      allQuizzes: [],
-      activePage: "browse"
+      auth: {
+        user: {}
+      },
+      allQuizzes: []
     }
   };
 
   componentDidMount(){
+    this.getQuizzes()
+  }
+
+  getQuizzes() {
     api.quizzes.getQuizzes().then(data => {
       console.log(data);
       this.setState({
         allQuizzes: data
       });
     });
+  }
 
+  authenticateUser(){
+    const token = localStorage.getItem("token");
+    console.log(token)
+    if (token) {
+      api.auth.getCurrentUser().then(user => {
+        const updatedState = { ...this.state.auth, user: user};
+        this.setState({ auth: updatedState});
+      })
+    }
   }
 
   render() {
