@@ -14,7 +14,7 @@ class App extends Component {
     this.state = {
       auth: {
         user: {}
-      },
+      },   
       allQuizzes: []
     }
   };
@@ -32,22 +32,25 @@ class App extends Component {
     });
   }
 
-  authenticateUser(){
+  authenticateUser(data){
     const token = localStorage.getItem("token");
-    console.log(token)
     if (token) {
-      api.auth.getCurrentUser().then(user => {
-        const updatedState = { ...this.state.auth, user: user};
-        this.setState({ auth: updatedState});
-      })
-    }
+        this.setState({ auth: {user: data.user}});
+      }
+  }
+
+  logoutUser() {
+    localStorage.removeItem("token")
+    this.setState({
+      auth: {user: {}}
+    })
   }
 
   render() {
     return(
       <Router>
         <div>
-          <NavBar />
+          <NavBar onAuthenticate={this.authenticateUser.bind(this)} onLogout={this.logoutUser.bind(this)}/>
           <Route 
             path="/" 
             render={() => <TitleBar currentTitle="Home Page"/>} 
