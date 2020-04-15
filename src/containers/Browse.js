@@ -1,19 +1,23 @@
 import React from "react"
 import QuizCard from '../components/QuizCard'
+import { Container, Row, Col } from 'react-bootstrap';
+
 
 
 function Browse(props) {
 
     function allQuizzes() {
         return props.allQuizzes.map((thisQuiz) => {
-            return <QuizCard key={thisQuiz.id} quiz={thisQuiz} />
+            return (<Col><QuizCard key={thisQuiz.id} quiz={thisQuiz} /></Col>)
         })
     }
     
     return (
-        <div>
-            {allQuizzes()}
-        </div>
+        <Container fluid="md">
+            <Row>
+                {allQuizzes()}
+            </Row>
+        </Container>
     )
 }
 
