@@ -62,4 +62,4 @@ class LoginForm extends Component {
         )
     }
 };
-export default AuthHOC(LoginForm);
+export default LoginForm;
