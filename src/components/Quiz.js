@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { api } from '../api';
 import Question from './QuizComponents/Questions'
+import Submit from './QuizComponents/Submit';
 
 
 class Quiz extends Component {
@@ -38,8 +39,9 @@ class Quiz extends Component {
         return Object.entries(questions).map((question, index) =>{
             return <Question 
             key={index}
-            question_text={question[1].text}
-            answers={question[1].answers}
+            question_text={questions[question].text}
+            question_id={questions[question].id}
+            answers={questions[question].answers}
             />
         }) 
     }
@@ -61,6 +63,7 @@ class Quiz extends Component {
             <div>
                 {this.renderQuizInfo()}
                 {this.renderQuestions()}
+                <Submit />
             </div>
             
         )
