@@ -34,9 +34,8 @@ class Quiz extends Component {
     };
 
     renderQuestions = () => {
-        const questions = this.state.questions
-        console.log(questions)
-        return Object.entries(questions).map((question, index) =>{
+        const questions = {...this.state.questions}
+        return Object.keys(questions).map((question, index) =>{
             return <Question 
             key={index}
             question_text={questions[question].text}
