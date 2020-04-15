@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import { api } from './api'
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import TitleBar from './containers/TitleBar';
 import Navi from './containers/Navi';
 import Browse from './containers/Browse';
 import Quiz from './components/Quiz';
-import { api } from './api'
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import MyAccount from './containers/MyAccount';
+
 
 //Fetch calls here
 
@@ -33,6 +35,7 @@ class App extends Component {
 
   authenticateUser(data){
     const token = localStorage.getItem("token");
+    console.log("Authenticate user")
     if (token) {
         this.setState({ auth: {user: data.user}});
       }
@@ -56,6 +59,11 @@ class App extends Component {
           <Route 
             exact path="/" 
             render={() => <TitleBar currentTitle="Home Page"/>} 
+          />
+
+          <Route
+            exact path="/account"
+            render={()=> <MyAccount user={this.state.auth.user}/>}
           />
 
           <Route 
