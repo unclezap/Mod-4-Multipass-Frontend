@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import TitleBar from './containers/TitleBar';
-import NavBar from './containers/NavBar'
-import Browse from './components/Browse';
+import Navi from './containers/Navi';
+import Browse from './containers/Browse';
 import Quiz from './components/Quiz';
 import { api } from './api'
-import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 //Fetch calls here
 
@@ -49,7 +49,10 @@ class App extends Component {
     return(
       <Router>
         <div>
-          <NavBar onAuthenticate={this.authenticateUser.bind(this)} onLogout={this.logoutUser.bind(this)}/>
+          <Navi
+          onAuthenticate={this.authenticateUser.bind(this)} 
+          onLogout={this.logoutUser.bind(this)}
+          />
           <Route 
             exact path="/" 
             render={() => <TitleBar currentTitle="Home Page"/>} 

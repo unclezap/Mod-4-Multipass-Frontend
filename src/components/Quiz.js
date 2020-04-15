@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { api } from '../api';
 import Question from './QuizComponents/Questions'
+import Submit from './QuizComponents/Submit';
 
 
 class Quiz extends Component {
@@ -26,8 +27,8 @@ class Quiz extends Component {
                         questions: data.questions
                     });
                 }
-            )   
-        }
+        )
+    }
             //question data is received, need to render questions
             //need to serialize answers here
             //need to put answers and questions in
@@ -38,6 +39,7 @@ class Quiz extends Component {
             return <Question 
             key={index}
             question_text={questions[question].text}
+            question_id={questions[question].id}
             answers={questions[question].answers}
             />
         }) 
@@ -60,6 +62,7 @@ class Quiz extends Component {
             <div>
                 {this.renderQuizInfo()}
                 {this.renderQuestions()}
+                <Submit />
             </div>
             
         )

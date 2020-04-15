@@ -1,5 +1,5 @@
 import React from "react"
-import QuizCard from './QuizCard'
+import QuizCard from '../components/QuizCard'
 
 
 function Browse(props) {
