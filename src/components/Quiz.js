@@ -7,7 +7,8 @@ class Quiz extends Component {
         super();
         this.state ={
             questions: [],
-            quiz: {}
+            quiz: {},
+            errorMessage: ""
         }
     }
 
@@ -15,29 +16,36 @@ class Quiz extends Component {
         this.getQuestions(this.props)
     }
 
-    buildQuiz(data) {
-
+    buildQuiz() {
+        return (
+            <h2>{this.state.quiz.title}</h2>
+            // etc.
+        )
     }
 
     getQuestions(props) {
         api.quizzes.getQuiz(props.match.params.id).then(data =>
-            {
-                this.setState({
-                    questions: []
-                });
-                console.log(data)
+                {   if (data.message) {
+                    this.setState({
+                        errorMessage: data.message
+                    })
+                } else {
+                    this.setState({
+                        questions: data.questions,
+                        quiz: data.quiz
+                    });
+                }
             }
         )
             //question data is received, need to render questions
-            //need to serialize answers here
-            //need to put answers and question in
     };
 
     render() {
         return (
             <div>
-                
+                {this.state.errorMessage.length === 0 ? this.buildQuiz() : <h2>{this.state.errorMessage}</h2>}
             </div>
+            
         )
     }
 }
