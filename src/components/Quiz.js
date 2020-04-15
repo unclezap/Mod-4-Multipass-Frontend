@@ -26,7 +26,6 @@ class Quiz extends Component {
                         questions: data.questions
                     });
                 }
-            }
         )
             //question data is received, need to render questions
             //need to serialize answers here
@@ -34,12 +33,13 @@ class Quiz extends Component {
     };
 
     renderQuestions = () => {
-        const questions = {...this.state.questions}
-        return Object.keys(questions).map((question, index) =>{
+        const questions = this.state.questions
+        console.log(questions)
+        return Object.entries(questions).map((question, index) =>{
             return <Question 
             key={index}
-            question_text={questions[question].text}
-            answers={questions[question].answers}
+            question_text={question[1].text}
+            answers={question[1].answers}
             />
         }) 
     }
