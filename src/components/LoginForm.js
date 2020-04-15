@@ -18,7 +18,8 @@ class LoginForm extends Component {
             if (data.error) {
                 this.setState({
                     error: data.error
-                }, () => console.log("you hit the login error!"))
+                }, 
+                () => console.log("you hit the login error!"))
             } else {
             localStorage.setItem("token", data.jwt)
             this.props.onAuthenticate(data)

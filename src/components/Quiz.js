@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { api } from '../api';
+import Question from './QuizComponents/Questions'
 
 
 class Quiz extends Component {
     constructor() {
         super();
         this.state ={
-            questions: [],
-            quiz: {}
+            quiz: {},
+            questions: {},
+            user: ""
         }
     }
 
@@ -15,17 +17,14 @@ class Quiz extends Component {
         this.getQuestions(this.props)
     }
 
-    buildQuiz(data) {
-
-    }
-
     getQuestions(props) {
         api.quizzes.getQuiz(props.match.params.id).then(data =>
             {
                 this.setState({
-                    questions: []
+                    user: data.user,
+                    quiz: data.quiz,
+                    questions: data.questions
                 });
-                console.log(data)
             }
         )
             //question data is received, need to render questions
@@ -33,10 +32,34 @@ class Quiz extends Component {
             //need to put answers and question in
     };
 
+    renderQuestions = () => {
+        const questions = {...this.state.questions}
+        return Object.keys(questions).map((question, index) =>{
+            return <Question 
+            key={index}
+            question_text={questions[question].text}
+            answers={questions[question].answers}
+            />
+        }) 
+    }
+
+
+    renderQuizInfo() {
+        return(
+            <div>
+                <div>
+                    <h2>{this.state.quiz.title}</h2>
+                    <p>By: {this.state.user}</p>
+                </div>
+            </div>
+        )
+    };
+
     render() {
         return (
             <div>
-                
+                {this.renderQuizInfo()}
+                {this.renderQuestions()}
             </div>
         )
     }

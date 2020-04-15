@@ -24,12 +24,11 @@ class App extends Component {
   }
 
   getQuizzes() {
-    api.quizzes.getQuizzes().then(data => {
-      console.log(data);
+    api.quizzes.getQuizzes().then(data =>
       this.setState({
         allQuizzes: data
-      });
-    });
+      })
+    );
   }
 
   authenticateUser(data){
@@ -52,7 +51,7 @@ class App extends Component {
         <div>
           <NavBar onAuthenticate={this.authenticateUser.bind(this)} onLogout={this.logoutUser.bind(this)}/>
           <Route 
-            path="/" 
+            exact path="/" 
             render={() => <TitleBar currentTitle="Home Page"/>} 
           />
 
