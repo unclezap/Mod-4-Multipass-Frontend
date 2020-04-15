@@ -11,9 +11,9 @@ function QuizCard(props) {
 
         //note: fix the link for heroku functionality
         <Card style={{ width: '18rem' }}>
-            <h2><Link to={`/quizzes/${id}`}>{title}</Link></h2>
-            <h4>{description}</h4>
-            <h5>{category}</h5>
+            <Card.Title><Link to={`/quizzes/${id}`}>{title}</Link></Card.Title>
+            <Card.Subtitle>{description}</Card.Subtitle>
+            <footer>{category}</footer>
         </Card>
     )
 }
