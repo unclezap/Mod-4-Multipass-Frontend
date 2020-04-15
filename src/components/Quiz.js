@@ -17,19 +17,28 @@ class Quiz extends Component {
         this.getQuestions(this.props)
     }
 
+    buildQuiz() {
+        return (
+            <h2>{this.state.quiz.title}</h2>
+            // etc.
+        )
+    }
+
     getQuestions(props) {
         api.quizzes.getQuiz(props.match.params.id).then(data =>
-            {
-                this.setState({
-                    user: data.user,
-                    quiz: data.quiz,
-                    questions: data.questions
-                });
+                {   if (data.message) {
+                    this.setState({
+                        errorMessage: data.message
+                    })
+                } else {
+                    this.setState({
+                        questions: data.questions,
+                        quiz: data.quiz
+                    });
+                }
             }
         )
             //question data is received, need to render questions
-            //need to serialize answers here
-            //need to put answers and question in
     };
 
     renderQuestions = () => {
@@ -61,6 +70,7 @@ class Quiz extends Component {
                 {this.renderQuizInfo()}
                 {this.renderQuestions()}
             </div>
+            
         )
     }
 }
