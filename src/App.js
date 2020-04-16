@@ -76,7 +76,7 @@ class App extends Component {
 
           <Route
             exact path="/account"
-            render={()=> <MyAccount user={this.state.auth.user}/>}
+            render={()=> <MyAccount user={this.state.auth.user} myQuizzes={this.state.allQuizzes.filter(quiz => quiz.user_id === this.state.auth.user.id)}/>}
           />
 
           <Route 
