@@ -21,9 +21,13 @@ const getQuiz = (quiz_id) => {
   .then(response => response.json())
 }
 
-const getUserScores = () => {
-    return fetch(`${API_ROOT}/userscores`, {headers: headers()})
+const getUserScoresByUser = (user_id) => {
+    return fetch(`${API_ROOT}/user_scores/users/${user_id}`, {headers: headers()})
     .then(response => response.json())
+}
+
+const getUserScoresByQuiz = (quiz_id) => {
+  return fetch(`${API_ROOT}/user_scores/quizzes/${quiz_id}`, {headers: headers()}).then(response => response.json())
 }
 
 const login = data => {
@@ -52,6 +56,7 @@ export const api = {
     getQuizzes
   },
   scores: {
-      getUserScores
+      getUserScoresByQuiz,
+      getUserScoresByUser
   }
 };

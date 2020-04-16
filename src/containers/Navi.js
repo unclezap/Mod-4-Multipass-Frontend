@@ -15,7 +15,10 @@ function Navi(props) {
                     {localStorage.getItem("token") ? <Nav.Link><Link to="/account">My Account</Link></Nav.Link> :null}
                 </Nav.Item>
                 <Nav.Item>
-                    <Nav.Link><Link to='/Browse'>Browse</Link></Nav.Link>
+                    <Nav.Link><Link to='/browse'>Browse</Link></Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                    <Nav.Link><Link to='/leaderboard'>Leaderboard</Link></Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
                     {localStorage.getItem("token")?<button onClick={props.onLogout}>Logout</button>:<Form><LoginForm onAuthenticate={props.onAuthenticate}/></Form>}

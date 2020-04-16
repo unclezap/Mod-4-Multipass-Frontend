@@ -6,6 +6,8 @@ import Navi from './containers/Navi';
 import Browse from './containers/Browse';
 import Quiz from './components/Quiz';
 import MyAccount from './containers/MyAccount';
+import Leaderboard from './containers/Leaderboard';
+import QuizScore from './components/QuizScore';
 
 
 //Fetch calls here
@@ -79,6 +81,16 @@ class App extends Component {
           <Route 
             path={'/quizzes/:id'}
             render={props => <Quiz {...props} thisQuiz={props.match.url} />}
+          />
+
+          <Route 
+            exact path="/leaderboard"
+            render={() => <Leaderboard allQuizzes={this.state.allQuizzes}/>}
+          />
+
+          <Route 
+            path={'/leaderboard/:id'}
+            render={props => <QuizScore {...props} thisQuiz={props.match.url} />}
           />
 
         </div>
