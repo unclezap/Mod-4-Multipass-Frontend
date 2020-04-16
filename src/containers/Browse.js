@@ -8,7 +8,7 @@ function Browse(props) {
 
     function allQuizzes() {
         return props.allQuizzes.map((thisQuiz) => {
-            return (<Col><QuizCard key={thisQuiz.id} quiz={thisQuiz} /></Col>)
+            return (<Col><QuizCard key={thisQuiz.id} quiz={thisQuiz} previousPage={"leaderboard"}/></Col>)
         })
     }
     

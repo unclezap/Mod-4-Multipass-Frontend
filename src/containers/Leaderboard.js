@@ -6,7 +6,7 @@ function Leaderboard(props) {
 
     function allQuizzes() {
         return props.allQuizzes.map((thisQuiz, index) => {
-            return (<Col><QuizCard key={thisQuiz.id} key={index} quiz={thisQuiz}/></Col>)
+            return (<Col><QuizCard key={thisQuiz.id} key={index} quiz={thisQuiz} previousPage={"leaderboard"}/></Col>)
         })
     }
     
