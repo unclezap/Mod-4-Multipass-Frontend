@@ -26,6 +26,16 @@ class App extends Component {
 
   componentDidMount(){
     this.getQuizzes()
+    window.addEventListener('beforeunload', this.onUnmount, false)
+  }
+  
+  onUnmount = () => {
+    localStorage.removeItem("token")
+  }
+  
+  componentWillUnmount() {
+    window.removeEventListener('beforeunload', this.onUnmount, false);
+    this.onUnmount();
   }
 
   getQuizzes() {
@@ -66,7 +76,7 @@ class App extends Component {
 
           <Route
             exact path="/account"
-            render={()=> <MyAccount user={this.state.auth.user}/>}
+            render={()=> <MyAccount user={this.state.auth.user} myQuizzes={this.state.allQuizzes.filter(quiz => quiz.user_id === this.state.auth.user.id)}/>}
           />
 
           <Route 
