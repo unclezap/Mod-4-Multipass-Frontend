@@ -28,10 +28,10 @@ class Quiz extends Component {
                     });
                 }
         )
+    }
             //question data is received, need to render questions
             //need to serialize answers here
             //need to put answers and questions in
-    };
 
     renderQuestions = () => {
         const questions = {...this.state.questions}
