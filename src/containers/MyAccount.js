@@ -45,7 +45,6 @@ class MyAccount extends React.Component {
     }
 
     seeMyScores = () => {
-        console.log("scors")
         const scoresArray = Object.entries(this.state.scores).map(entry => entry[1])
         return scoresArray.map((thisScore) => {
             return (

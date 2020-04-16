@@ -2,10 +2,7 @@ import React, { Component } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { api } from '../api';
-<<<<<<< HEAD
-=======
 import { Container, Row, Col } from 'react-bootstrap';
->>>>>>> 27807f80e74b5a286bae9a205baee55f89cfcc10
 
 class SignUp extends Component {
     constructor(){
