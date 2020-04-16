@@ -26,6 +26,16 @@ class App extends Component {
 
   componentDidMount(){
     this.getQuizzes()
+    window.addEventListener('beforeunload', this.onUnmount, false)
+  }
+  
+  onUnmount = () => {
+    localStorage.removeItem("token")
+  }
+  
+  componentWillUnmount() {
+    window.removeEventListener('beforeunload', this.onUnmount, false);
+    this.onUnmount();
   }
 
   getQuizzes() {
