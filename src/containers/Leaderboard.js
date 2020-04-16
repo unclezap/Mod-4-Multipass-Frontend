@@ -5,8 +5,8 @@ import { Container, Row, Col } from 'react-bootstrap';
 function Leaderboard(props) {
 
     function allQuizzes() {
-        return props.allQuizzes.map((thisQuiz) => {
-            return (<Col><QuizCard key={thisQuiz.id} quiz={thisQuiz}/></Col>)
+        return props.allQuizzes.map((thisQuiz, index) => {
+            return (<Col><QuizCard key={thisQuiz.id} key={index} quiz={thisQuiz}/></Col>)
         })
     }
     
