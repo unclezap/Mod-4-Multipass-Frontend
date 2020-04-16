@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { api } from '../api';
+import Button from 'react-bootstrap/Button';
 
 class LoginForm extends Component {
     constructor(){
@@ -19,10 +20,10 @@ class LoginForm extends Component {
                 this.setState({
                     error: data.error
                 }, 
-                () => console.log("you hit the login error!"))
+                () => alert(this.state.error))
             } else {
-            localStorage.setItem("token", data.jwt)
-            this.props.onAuthenticate(data)
+            localStorage.setItem("token", data.jwt);
+            this.props.onAuthenticate(data);
             }
         })
     };
@@ -47,7 +48,7 @@ class LoginForm extends Component {
                         <input type="text" name="username" onChange={this.handleChange} value={this.state.fields.username}></input>
                         <label htmlFor="password" />
                         <input type="password" name="password" onChange={this.handleChange} value={this.state.fields.password}></input>
-                        <input type="submit" value="Log In"></input>
+                        <Button type="submit">Log In</Button>
                     </form>
                 </div>
         )
