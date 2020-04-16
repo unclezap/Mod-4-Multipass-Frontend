@@ -10,6 +10,8 @@ import SignUp from './containers/SignUp'
 import Leaderboard from './containers/Leaderboard';
 import QuizScore from './components/QuizScore';
 
+import NewQuiz from './components/NewQuiz';
+
 
 //Fetch calls here
 
@@ -103,8 +105,8 @@ class App extends Component {
           />
 
           <Route 
-            path={'/leaderboard/:id'}
-            render={props => <QuizScore {...props} thisQuiz={props.match.url} />}
+            exact path="/new_quiz"
+            render={() => <NewQuiz />}
           />
 
         </div>
