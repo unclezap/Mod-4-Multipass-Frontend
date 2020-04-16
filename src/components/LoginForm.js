@@ -48,7 +48,7 @@ class LoginForm extends Component {
                         <input type="text" name="username" onChange={this.handleChange} value={this.state.fields.username}></input>
                         <label htmlFor="password" />
                         <input type="password" name="password" onChange={this.handleChange} value={this.state.fields.password}></input>
-                        <Button type="submit">Log In</Button>
+                        <Button variant="outline-primary" type="submit">Log In</Button>
                     </form>
                 </div>
         )
