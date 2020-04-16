@@ -20,18 +20,18 @@ class Quiz extends Component {
 
     getQuestions(props) {
         api.quizzes.getQuiz(props.match.params.id).then(data =>
-            {
-                this.setState({
-                    user: data.user,
-                    quiz: data.quiz,
-                    questions: data.questions
-                });
-            }
+                {   
+                    this.setState({
+                        user: data.user,
+                        quiz: data.quiz,
+                        questions: data.questions
+                    });
+                }
         )
+    }
             //question data is received, need to render questions
             //need to serialize answers here
-            //need to put answers and question in
-    };
+            //need to put answers and questions in
 
     renderQuestions = () => {
         const questions = {...this.state.questions}
@@ -64,6 +64,7 @@ class Quiz extends Component {
                 {this.renderQuestions()}
                 <Submit />
             </div>
+            
         )
     }
 }
