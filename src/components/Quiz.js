@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { api } from '../api';
 import Question from './QuizComponents/Questions'
-import Submit from './QuizComponents/Submit';
+import Button from 'react-bootstrap/Button'
 
 
 class Quiz extends Component {
@@ -12,26 +12,31 @@ class Quiz extends Component {
             questions: {},
             user: ""
         }
-    }
+    };
 
     componentDidMount() {
-        this.getQuestions(this.props)
-    }
+        this.getQuestions(this.props);
+    };
+
+    checkAnswers(e) {
+        console.log(document.getElementsByClassName("question"))
+        // Succesfully grab the Question nodes. just needs to burrow in and see which buttons are checked. 
+        // Maybe we shouldn't send over the correct key, but do a fetch here and see if the answer.id matches the correct answer.
+        // going bed now
+    };
 
     getQuestions(props) {
         api.quizzes.getQuiz(props.match.params.id).then(data =>
-                {   
-                    this.setState({
-                        user: data.user,
-                        quiz: data.quiz,
-                        questions: data.questions
-                    });
-                }
-        )
-    }
-            //question data is received, need to render questions
-            //need to serialize answers here
-            //need to put answers and questions in
+            {   
+                this.setState({
+                    user: data.user,
+                    quiz: data.quiz,
+                    questions: data.questions
+                });
+            }
+        );
+    };
+
 
     renderQuestions = () => {
         const questions = {...this.state.questions}
@@ -42,9 +47,8 @@ class Quiz extends Component {
             question_id={questions[question].id}
             answers={questions[question].answers}
             />
-        }) 
-    }
-
+        });
+    };
 
     renderQuizInfo() {
         return(
@@ -54,7 +58,7 @@ class Quiz extends Component {
                     <p>By: {this.state.user}</p>
                 </div>
             </div>
-        )
+        );
     };
 
     render() {
@@ -62,7 +66,7 @@ class Quiz extends Component {
             <div>
                 {this.renderQuizInfo()}
                 {this.renderQuestions()}
-                <Submit />
+                <Button onClick={e => this.checkAnswers(e)}>Submit</Button>
             </div>
             
         )
