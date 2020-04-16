@@ -22,4 +22,4 @@ const AuthHOC = WrappedComponent => {
     }
 }
 
-export default AuthHOC
+export default AuthHOC;

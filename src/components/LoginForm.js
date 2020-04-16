@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { api } from '../api';
-import AuthHOC from '../HOC/AuthHOC'
 
 class LoginForm extends Component {
     constructor(){
-        super()
+        super();
         this.state = {
             error: false,
             fields: {
@@ -13,6 +12,7 @@ class LoginForm extends Component {
             }
         };
     };
+
     actualLogin(fields) {
         api.auth.login(fields).then(data => {
             if (data.error) {
@@ -26,12 +26,14 @@ class LoginForm extends Component {
             }
         })
     };
+
     handleChange = (e) => {
-        const newFields = {...this.state.fields, [e.target.name]: e.target.value}
+        const newFields = {...this.state.fields, [e.target.name]: e.target.value};
         this.setState({
             fields: newFields
-        })
-    }
+        });
+    };
+    
     handleSubmit(e) {
         e.preventDefault();
         this.actualLogin(this.state.fields);

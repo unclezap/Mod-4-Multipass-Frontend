@@ -11,6 +11,14 @@ const headers = () => {
     }
 }
 
+const createUser = (data) => {
+  return fetch(`${API_ROOT}/users`, {
+    method: "POST",
+    headers: headers(),
+    body: JSON.stringify({user: data})
+  }).then(res => res.json());
+};
+
 const getQuizzes = () => {
     return fetch(`${API_ROOT}/quizzes`, {headers: headers()})
     .then(response => response.json())
@@ -46,6 +54,9 @@ export const api = {
   auth: {
     login,
     getCurrentUser
+  },
+  user: {
+    createUser
   },
   quizzes: {
     getQuiz,
