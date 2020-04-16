@@ -105,6 +105,11 @@ class App extends Component {
           />
 
           <Route 
+            path={'/leaderboard/:id'}
+            render={props => <QuizScore {...props} thisQuiz={props.match.url} />}
+          />
+
+          <Route 
             exact path="/new_quiz"
             render={() => <NewQuiz />}
           />
