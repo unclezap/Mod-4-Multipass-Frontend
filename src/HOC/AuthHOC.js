@@ -5,9 +5,9 @@ const AuthHOC = WrappedComponent => {
     return class AuthHOC extends React.Component {
         isAuthorized = () => {
             if (localStorage.getItem("token")) {
-                return false
-            } else {
                 return true
+            } else {
+                return false
             }
         }
 
@@ -15,11 +15,11 @@ const AuthHOC = WrappedComponent => {
             return (
                 <> {this.isAuthorized()
                     ?<WrappedComponent {...this.props} />
-                    :null}
+                    :<Redirect to="/" />}
                 </>
             )
         }
     }
 }
 
-export default AuthHOC
+export default AuthHOC;

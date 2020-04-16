@@ -6,6 +6,7 @@ import Navi from './containers/Navi';
 import Browse from './containers/Browse';
 import Quiz from './components/Quiz';
 import MyAccount from './containers/MyAccount';
+import SignUp from './containers/SignUp'
 
 
 //Fetch calls here
@@ -73,9 +74,12 @@ class App extends Component {
           
           <Route 
             path={'/browse/:category'}
-            render={(props) => <Browse {...props} allQuizzes={this.state.allQuizzes.filter(quiz => quiz.category === props.category)}/>}
+            render={props => <Browse {...props} allQuizzes={this.state.allQuizzes.filter(quiz => quiz.category === props.category)}/>}
           />
-
+          <Route
+            exact path={'/signup'}
+            render={props => <SignUp {...props} />}
+          />
           <Route 
             path={'/quizzes/:id'}
             render={props => <Quiz {...props} thisQuiz={props.match.url} />}
