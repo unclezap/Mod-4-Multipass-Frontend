@@ -3,6 +3,7 @@ import TitleBar from './containers/TitleBar';
 import NavBar from './containers/NavBar'
 import Browse from './components/Browse';
 import Quiz from './components/Quiz';
+import NewQuiz from './components/NewQuiz';
 import { api } from './api'
 import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
 
@@ -68,6 +69,11 @@ class App extends Component {
           <Route 
             path={'/quizzes/:id'}
             render={props => <Quiz {...props} thisQuiz={props.match.url} />}
+          />
+
+          <Route 
+            exact path="/new_quiz"
+            render={() => <NewQuiz />}
           />
 
         </div>
