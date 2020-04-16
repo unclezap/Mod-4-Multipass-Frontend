@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import TitleBar from './containers/TitleBar';
 import Navi from './containers/Navi';
 import Browse from './containers/Browse';
+import Popular from './containers/Popular';
 import Quiz from './components/Quiz';
 import MyAccount from './containers/MyAccount';
 import SignUp from './containers/SignUp'
@@ -87,8 +88,14 @@ class App extends Component {
           
           <Route 
             path={'/browse/:category'}
-            render={props => <Browse {...props} allQuizzes={this.state.allQuizzes.filter(quiz => quiz.category === props.category)}/>}
+            render={props => <Browse {...props} allQuizzes={this.state.allQuizzes.filter(quiz => quiz.category === props.match.params.category)}/>}
           />
+
+          <Route
+            path={'/popular'}
+            render={() => <Popular allQuizzes={this.state.allQuizzes}/>}
+          />
+
           <Route
             exact path={'/signup'}
             render={props => <SignUp {...props} />}
