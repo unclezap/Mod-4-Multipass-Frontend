@@ -41,7 +41,6 @@ class Quiz extends Component {
         }))
     }
 
-    // Need to get the state after adding checked answers. then post that.
     handleSubmit(e) {
         e.preventDefault()
         let amountCorrect
@@ -53,8 +52,6 @@ class Quiz extends Component {
             amountCorrect = Object.values(this.state.checkedAnswers).filter(answer=> answer === 'true')
             alert(`You got ${amountCorrect.length} right!`)
         }
-        // post score to backend
-        // redirect to gif page with 
     };
 
     // Shows answers on page as one group.

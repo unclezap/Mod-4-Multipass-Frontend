@@ -38,7 +38,6 @@ class NewQuiz extends Component {
                 console.log(data)
                 this.setState({here: false, newQuiz: data.id}) 
                 this.props.quizMade(data)
-                // return <Redirect to={"/quizzes/" + data.id}/>
             }
         })
         
