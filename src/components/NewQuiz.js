@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import NewQuestions from './NewQuestions';
 import { api } from '../api';
+import {Redirect} from 'react-router-dom'
+
 const API_ROOT = 'http://localhost:3000' 
 
 class NewQuiz extends Component {
 
     state = {
+        here: true,
+        newQuiz: "",
         title: "",
         description: "",
         category: "",
@@ -24,13 +28,15 @@ class NewQuiz extends Component {
         ]
     }
 
-    handleSubmit = () => { 
+    handleSubmit = (e) => { 
+        e.preventDefault()
         api.quizzes.createQuiz(this.state)
         .then(data => {
             if (data.message) {
                 alert(`${data.message}`)
             } else {
                 console.log(data)
+                this.setState({here: false, newQuiz: data.id}) 
                 this.props.quizMade(data)
                 // return <Redirect to={"/quizzes/" + data.id}/>
             }
@@ -157,20 +163,23 @@ class NewQuiz extends Component {
     render() {
         return (
             <div>
-                <form onSubmit={this.handleSubmit} onChange={this.handleChange} >
-                    <label htmlFor="title">Title</label>
-                    <input id="title" type="text" name="title" /> 
-                    <label htmlFor="description">Description</label>
-                    <input id="description" type="text" name="description" /> 
-                    <label htmlFor="category">Category</label>
-                    <input id="category" type="text" name="category" /> 
+                {this.state.here
+                ? <form onSubmit={(e) => this.handleSubmit(e)} onChange={this.handleChange} >
+                <label htmlFor="title">Title</label>
+                <input id="title" type="text" name="title" /> 
+                <label htmlFor="description">Description</label>
+                <input id="description" type="text" name="description" /> 
+                <label htmlFor="category">Category</label>
+                <input id="category" type="text" name="category" /> 
 
-                    <NewQuestions questions={this.state.questions} addAnswer={this.addAnswer}/>
+                <NewQuestions questions={this.state.questions} addAnswer={this.addAnswer}/>
 
-                    <button onClick={this.addQuestion}>Add another question</button>
+                <button onClick={this.addQuestion}>Add another question</button>
 
-                    <input type="submit" value="Make Quiz!"></input>
-                </form>
+                <input type="submit" value="Make Quiz!"></input>
+                 </form>
+                : <Redirect to={"/quizzes/" + this.state.newQuiz}/>}
+                
             </div>
         )
     }

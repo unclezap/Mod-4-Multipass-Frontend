@@ -10,11 +10,11 @@ function QuizCard(props) {
     return (
 
         //note: fix the link for heroku functionality
-        <Card style={{ width: '18rem' }} className="text-center">
+        <Card style={{ width: '18rem' }} style={props.styleProps} className="text-center">
             <Card.Title>{title}</Card.Title>
             <Card.Text >{description}</Card.Text>
             <Card.Subtitle className="text-muted">Category: {category}</Card.Subtitle>
-            <Link to={`/${props.previousPage}/${id}`} className="btn btn-outline-dark">{props.previousPage === "quizzes" ? "Take Quiz" : "See Score"}</Link>
+            <Link to={`/${props.previousPage}/${id}`} className="btn btn-outline-dark">{props.previousPage == "quizzes" ? "Take Quiz" : "See Score"}</Link>
         </Card>
     )
 }

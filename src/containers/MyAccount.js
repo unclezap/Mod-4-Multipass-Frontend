@@ -40,7 +40,7 @@ class MyAccount extends React.Component {
 
     seeMyQuizzes = () => {
         return this.props.myQuizzes.map((thisQuiz) => {
-                return (<Col><QuizCard key={thisQuiz.id} quiz={thisQuiz} /></Col>)
+                return (<Col><QuizCard key={thisQuiz.id} quiz={thisQuiz} previousPage={"quizzes"}/></Col>)
             });
     };
 
