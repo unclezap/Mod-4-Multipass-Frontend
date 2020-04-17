@@ -58,6 +58,7 @@ class App extends Component {
 
   changeBodyBg(){
     this.setState({multipass: multipassBackground})
+    alert ("MULTIPASSS MODE")
 }
 
   authenticateUser(data){
