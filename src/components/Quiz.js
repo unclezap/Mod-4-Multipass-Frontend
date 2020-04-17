@@ -20,6 +20,9 @@ class Quiz extends Component {
     checkAnswers(e) {
         e.preventDefault();
         console.log(e.target)
+        // if (this.props.checkForMultipass !== null) {
+        //     alert("YOU HAVE A MULTIPASS")
+        // }
         // Succesfully grab the Question nodes. just needs to burrow in and see which buttons are checked. 
         // Maybe we shouldn't send over the correct key, but do a fetch here and see if the answer.id matches the correct answer.
         // going bed now
