@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { api } from '../api';
-import Question from './QuizComponents/Questions'
 
 
 class Quiz extends Component {
@@ -38,25 +37,45 @@ class Quiz extends Component {
 
 
     // This function was for handle radio buttons before Quiz page refactor.
-    // handleCheck(e) {
-    //     console.log("clicking")
-    //     this.setState(prev => ({
-    //         ...prev,
-    //         checkedAnswers: [e]
-    //     }))
-    // }
+    handleCheck(e) {
+        // Can console.log value, but can't add them to state???
+        console.log(e.target.value)
+        // this.setState(prev => ({
+        //     ...prev,
+        //     checkedAnswers: [...prev.checkedAnswers, e.target.value]
+        // }))
+    };
 
+    // Need to get the state after adding checked answers. then post that.
+    handleSubmit(e) {
+        e.preventDefault()
+        console.log(e.target)
+    };
 
+    // Shows answers on page as one group.
+    renderAnswers = (question) =>{
+        const answerArray = question.answers;
+        return answerArray.map(answer=>{
+            let currentAnswer = answer.answer
+            return (
+                <div className="form-check">
+                    <label htmlFor={currentAnswer} style={{marginRight: "5px"}}>{currentAnswer}</label>
+                    <input type="radio" onChange={e=>this.handleCheck(e)} name={question.text} value={answer.answer} />
+                </div>
+            )
+        })
+    }
+
+    // Creates a div for each question.
     renderQuestions = () => {
-        const questions = {...this.state.questions}
+        const questions = this.state.questions;
         return Object.keys(questions).map((question, index) =>{
-            return <Question 
-            handleCheck={this.handleCheck.bind(this)}
-            key={index}
-            question_text={questions[question].text}
-            question_id={questions[question].id}
-            answers={questions[question].answers}
-            />
+            //current questions is a shortcut to accessing our question object.
+            const currentQuestion = questions[question];
+            return(<div className="form-check" key={index}>
+                <label className="form-check-label"htmlFor={currentQuestion}>{currentQuestion.text}</label><br/>
+                {this.renderAnswers(currentQuestion)}
+            </div>)
         });
     };
 
@@ -73,7 +92,7 @@ class Quiz extends Component {
         return (
             <div>
                 {this.renderQuizInfo()}
-                <form onSubmit={this.checkAnswers}>
+                <form name="quiz" className="form-group" onSubmit={e=>this.handleSubmit(e)}>
                     {this.renderQuestions()}
                     <input className="btn btn-outline-primary" type="submit" value="Get my Score!"/>
                 </form>
