@@ -17,17 +17,6 @@ class Quiz extends Component {
         this.getQuestions(this.props);
     };
 
-    checkAnswers(e) {
-        e.preventDefault();
-        console.log(e.target)
-        // if (this.props.checkForMultipass !== null) {
-        //     alert("YOU HAVE A MULTIPASS")
-        // }
-        // Succesfully grab the Question nodes. just needs to burrow in and see which buttons are checked. 
-        // Maybe we shouldn't send over the correct key, but do a fetch here and see if the answer.id matches the correct answer.
-        // going bed now
-    };
-
     //Grab questions from backend on page render.
     getQuestions(props) {
         api.quizzes.getQuiz(props.match.params.id).then(data =>
