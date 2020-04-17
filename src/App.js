@@ -10,7 +10,6 @@ import MyAccount from './containers/MyAccount';
 import SignUp from './containers/SignUp'
 import Leaderboard from './containers/Leaderboard';
 import QuizScore from './components/QuizScore';
-
 import NewQuiz from './components/NewQuiz';
 
 
@@ -61,6 +60,15 @@ class App extends Component {
     this.setState({
       auth: {user: {}}
     })
+  }
+
+  updateAllQuizzes(data) {
+    this.setState(prev => {
+        const newAllQuizzes = prev.allQuizzes
+        newAllQuizzes.push(data)
+        return {allQuizzes: newAllQuizzes}
+      }
+    )
   }
 
   render() {
@@ -117,7 +125,7 @@ class App extends Component {
 
           <Route 
             exact path="/new_quiz"
-            render={() => <NewQuiz />}
+            render={() => <NewQuiz quizMade={this.updateAllQuizzes.bind(this)}/>}
           />
 
         </div>

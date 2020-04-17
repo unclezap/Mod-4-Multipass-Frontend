@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import NewQuestions from './NewQuestions';
 import { api } from '../api';
-import { Redirect } from 'react-router-dom';
+const API_ROOT = 'http://localhost:3000' 
 
 class NewQuiz extends Component {
 
@@ -28,7 +28,13 @@ class NewQuiz extends Component {
         e.preventDefault();
         api.quizzes.createQuiz(this.state)
         .then(data => {
-            return <Redirect to={"/quizzes/" + data.id}/>
+            if (data.message) {
+                alert(`${data.message}`)
+            } else {
+                console.log(data)
+                this.props.quizMade(data)
+                // return <Redirect to={"/quizzes/" + data.id}/>
+            }
         })
         
     }
@@ -114,6 +120,7 @@ class NewQuiz extends Component {
     }
 
     addQuestion = (e) => {
+        e.preventDefault()
         this.setState((prev) => ({
             questions: [...prev.questions, {
                 id: Math.random().toString(36).replace(/[^a-z]+/g, "").substr(0,12),
