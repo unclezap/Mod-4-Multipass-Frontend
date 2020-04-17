@@ -34,6 +34,14 @@ const getQuiz = (quiz_id) => {
   .then(response => response.json())
 }
 
+const createQuiz = (newQuiz) => {
+  return fetch(`${API_ROOT}/quizzes`, {
+    method: "POST",
+    headers: headers(),
+    body: JSON.stringify({quiz: newQuiz})
+  }).then(res => res.json());
+}
+
 const getUserScoresByUser = (user_id) => {
     return fetch(`${API_ROOT}/user_scores/users/${user_id}`, {headers: headers()})
     .then(response => response.json())
@@ -70,7 +78,8 @@ export const api = {
   quizzes: {
     getQuiz,
     getQuizzes,
-    getPopularQuizzes
+    getPopularQuizzes,
+    createQuiz
   },
   scores: {
       getUserScoresByQuiz,

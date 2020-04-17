@@ -1,18 +1,22 @@
 import React, { Component } from 'react';
 import NewQuestions from './NewQuestions';
+import { api } from '../api';
+import { Redirect } from 'react-router-dom';
 
 class NewQuiz extends Component {
 
     state = {
         title: "",
+        description: "",
+        category: "",
         questions: [
             {   
                 id: "sdg",
-                text:"",
+                question_text:"",
                 answers: [
                     {
                         id: "rth",
-                        text: "",
+                        answer_text: "",
                         correct: false
                     }
                 ]
@@ -20,13 +24,27 @@ class NewQuiz extends Component {
         ]
     }
 
-    handleSubmit = (e) => { e.preventDefault() }
+    handleSubmit = (e) => { 
+        e.preventDefault();
+        api.quizzes.createQuiz(this.state)
+        .then(data => {
+            return <Redirect to={"/quizzes/" + data.id}/>
+        })
+        
+    }
 
     handleChange =(e) => {
-        console.log(e.target.value)
         if (e.target.name === "title") {
             this.setState({
                 title: e.target.value
+            })
+        } else if (e.target.name === "description") {
+            this.setState({
+                description: e.target.value
+            })
+        } else if (e.target.name === "category") {
+            this.setState({
+                category: e.target.value
             })
         } else if (e.target.name === "question") {
             let input = e.target.value
@@ -36,7 +54,7 @@ class NewQuiz extends Component {
                     if (thisQuestion.id !== id) {
                         return thisQuestion
                     } else {
-                        return {...thisQuestion, text: input}
+                        return {...thisQuestion, question_text: input}
                     }
                 })
                 return(
@@ -56,7 +74,7 @@ class NewQuiz extends Component {
                             if (thisAnswer.id !== id) {
                                 return thisAnswer
                             } else {
-                                return {...thisAnswer, text: input}
+                                return {...thisAnswer, answer_text: input}
                             }
                         })
                         return (
@@ -103,7 +121,7 @@ class NewQuiz extends Component {
                 answers: [
                     {
                         id: Math.random().toString(36).replace(/[^a-z]+/g, "").substr(0,12),
-                        text: "",
+                        question_text: "",
                         correct: false
                     }
                 ]
@@ -119,7 +137,7 @@ class NewQuiz extends Component {
                 } else {
                     return {...thisQuestion, answers:[...thisQuestion.answers, {
                         id: Math.random().toString(36).replace(/[^a-z]+/g, "").substr(0,12),
-                        text: "",
+                        answer_text: "",
                         correct: false
                     }]}
                 }
@@ -136,6 +154,10 @@ class NewQuiz extends Component {
                 <form onSubmit={e => this.handleSubmit(e)} onChange={this.handleChange} >
                     <label htmlFor="title">Title</label>
                     <input id="title" type="text" name="title" /> 
+                    <label htmlFor="description">Description</label>
+                    <input id="description" type="text" name="description" /> 
+                    <label htmlFor="category">Category</label>
+                    <input id="category" type="text" name="category" /> 
 
                     <NewQuestions questions={this.state.questions} addAnswer={this.addAnswer}/>
 
