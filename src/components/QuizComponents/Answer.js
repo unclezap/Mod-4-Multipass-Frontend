@@ -1,11 +1,11 @@
 import React from 'react';
 
 function Answer(props) {
-    const {answer} = props.answer
+    const {answer, id} = props.answer
     
     return(
         <div>
-            <input type="radio" id={answer} name="answer" value={answer} />
+            <input type="radio" onChange={(e) => props.handleCheck(e.target.value)} id={id} name="answer" value={answer} />
             <label htmlFor={answer}>{answer}</label>
         </div>
     )

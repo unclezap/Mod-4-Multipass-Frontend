@@ -7,6 +7,7 @@ class Question extends Component {
         const answers = this.props.answers
         return Object.keys(answers).map((object, index) => {
             return <Answer 
+            handleCheck={this.props.handleCheck}
             key={index}
             answer={answers[object]}
             />

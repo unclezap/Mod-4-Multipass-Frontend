@@ -9,7 +9,8 @@ class Quiz extends Component {
         this.state ={
             quiz: {},
             questions: {},
-            user: ""
+            user: "",
+            checkedAnswers: []
         }
     };
 
@@ -20,11 +21,9 @@ class Quiz extends Component {
     checkAnswers(e) {
         e.preventDefault();
         console.log(e.target)
-        // Succesfully grab the Question nodes. just needs to burrow in and see which buttons are checked. 
-        // Maybe we shouldn't send over the correct key, but do a fetch here and see if the answer.id matches the correct answer.
-        // going bed now
     };
 
+    //Grab questions from backend on page render.
     getQuestions(props) {
         api.quizzes.getQuiz(props.match.params.id).then(data =>
             {   
@@ -38,10 +37,21 @@ class Quiz extends Component {
     };
 
 
+    // This function was for handle radio buttons before Quiz page refactor.
+    // handleCheck(e) {
+    //     console.log("clicking")
+    //     this.setState(prev => ({
+    //         ...prev,
+    //         checkedAnswers: [e]
+    //     }))
+    // }
+
+
     renderQuestions = () => {
         const questions = {...this.state.questions}
         return Object.keys(questions).map((question, index) =>{
             return <Question 
+            handleCheck={this.handleCheck.bind(this)}
             key={index}
             question_text={questions[question].text}
             question_id={questions[question].id}
