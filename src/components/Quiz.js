@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { api } from '../api';
 import Question from './QuizComponents/Questions'
-import Button from 'react-bootstrap/Button'
 
 
 class Quiz extends Component {
@@ -19,7 +18,8 @@ class Quiz extends Component {
     };
 
     checkAnswers(e) {
-        console.log(document.getElementsByClassName("question"))
+        e.preventDefault();
+        console.log(e.target)
         // Succesfully grab the Question nodes. just needs to burrow in and see which buttons are checked. 
         // Maybe we shouldn't send over the correct key, but do a fetch here and see if the answer.id matches the correct answer.
         // going bed now
@@ -53,10 +53,8 @@ class Quiz extends Component {
     renderQuizInfo() {
         return(
             <div>
-                <div>
                     <h2>{this.state.quiz.title}</h2>
                     <p>By: {this.state.user}</p>
-                </div>
             </div>
         );
     };
@@ -65,10 +63,11 @@ class Quiz extends Component {
         return (
             <div>
                 {this.renderQuizInfo()}
-                {this.renderQuestions()}
-                <Button onClick={e => this.checkAnswers(e)}>Submit</Button>
+                <form onSubmit={this.checkAnswers}>
+                    {this.renderQuestions()}
+                    <input className="btn btn-outline-primary" type="submit" value="Get my Score!"/>
+                </form>
             </div>
-            
         )
     }
 }

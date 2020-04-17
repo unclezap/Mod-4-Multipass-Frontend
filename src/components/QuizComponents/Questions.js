@@ -15,11 +15,9 @@ class Question extends Component {
 
     render() {
         return(
-            <div className="question">
-                <h3>{this.props.question_text}</h3>
-                <form>
-                    {this.renderAnswers()}
-                </form>
+            <div>
+                <label htmlFor={this.props.question_text} />
+                {this.renderAnswers()}
             </div>
         )
     }
