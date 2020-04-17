@@ -17,11 +17,6 @@ class Quiz extends Component {
         this.getQuestions(this.props);
     };
 
-    checkAnswers(e) {
-        e.preventDefault();
-        console.log(e.target)
-    };
-
     //Grab questions from backend on page render.
     getQuestions(props) {
         api.quizzes.getQuiz(props.match.params.id).then(data =>
