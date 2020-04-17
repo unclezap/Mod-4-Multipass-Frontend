@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { api } from '../api';
-import Question from './QuizComponents/Questions'
 
 
 class Quiz extends Component {
@@ -9,7 +8,8 @@ class Quiz extends Component {
         this.state ={
             quiz: {},
             questions: {},
-            user: ""
+            user: "",
+            checkedAnswers: {}
         }
     };
 
@@ -20,11 +20,9 @@ class Quiz extends Component {
     checkAnswers(e) {
         e.preventDefault();
         console.log(e.target)
-        // Succesfully grab the Question nodes. just needs to burrow in and see which buttons are checked. 
-        // Maybe we shouldn't send over the correct key, but do a fetch here and see if the answer.id matches the correct answer.
-        // going bed now
     };
 
+    //Grab questions from backend on page render.
     getQuestions(props) {
         api.quizzes.getQuiz(props.match.params.id).then(data =>
             {   
@@ -37,16 +35,50 @@ class Quiz extends Component {
         );
     };
 
+    handleCheck(e) {
+        const question_text = e.target.name;
+        const value = e.target.value
+        this.setState(prev=>({
+            ...prev,
+            checkedAnswers: {...prev.checkedAnswers,
+                [question_text]: value
+                }
+        }))
+    }
 
+    // Need to get the state after adding checked answers. then post that.
+    handleSubmit(e) {
+        e.preventDefault()
+        const amountCorrect = Object.values(this.state.checkedAnswers).filter(answer=> answer === 'true')
+        alert(`You got ${amountCorrect.length} right!`)
+        // post score to backend
+        // redirect to gif page with 
+    };
+
+    // Shows answers on page as one group.
+    renderAnswers = (question, index) =>{
+        const answerArray = question.answers;
+        return answerArray.map(answer=>{
+            let currentAnswer = answer.answer
+            return (
+                <div className="form-check">
+                    <label htmlFor={currentAnswer} style={{marginRight: "5px"}}>{currentAnswer}</label>
+                    <input type="radio" className={`group${index}`} onChange={e=>this.handleCheck(e)} name={question.text} value={answer.correct} />
+                </div>
+            )
+        })
+    }
+
+    // Creates a div for each question.
     renderQuestions = () => {
-        const questions = {...this.state.questions}
+        const questions = this.state.questions;
         return Object.keys(questions).map((question, index) =>{
-            return <Question 
-            key={index}
-            question_text={questions[question].text}
-            question_id={questions[question].id}
-            answers={questions[question].answers}
-            />
+            //current questions is a shortcut to accessing our question object.
+            const currentQuestion = questions[question];
+            return(<div className="form-check questions" key={index}>
+                <label className="form-check-label"htmlFor={currentQuestion}>{currentQuestion.text}</label><br/>
+                {this.renderAnswers(currentQuestion, index)}
+            </div>)
         });
     };
 
@@ -63,7 +95,7 @@ class Quiz extends Component {
         return (
             <div>
                 {this.renderQuizInfo()}
-                <form onSubmit={this.checkAnswers}>
+                <form name="quiz" className="form-group" onSubmit={e=>this.handleSubmit(e)}>
                     {this.renderQuestions()}
                     <input className="btn btn-outline-primary" type="submit" value="Get my Score!"/>
                 </form>

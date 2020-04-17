@@ -59,10 +59,8 @@ class Popular extends React.Component {
         const cat = event.target.value
         let newCats = this.state.showCategories
             if (this.state.showCategories.includes(cat)) {
-                console.log("hi")
                 newCats = newCats.filter( category => category !== cat)
             } else {
-                console.log("goodbye")
                 newCats.push(cat)
             }
         this.setState(prev => {
