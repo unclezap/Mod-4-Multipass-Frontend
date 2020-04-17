@@ -28,15 +28,21 @@ class App extends Component {
 
   componentDidMount(){
     this.getQuizzes()
-    window.addEventListener('beforeunload', this.onUnmount, false)
+    if (localStorage.getItem("user")) {
+      this.setState({user: localStorage.getItem("user")})
+
+    }
+    // window.addEventListener('beforeunload', this.onUnmount, false)
   }
   
   onUnmount = () => {
+    // window.history.go(-1)
     localStorage.removeItem("token")
+    localStorage.removeItem("user")
   }
   
   componentWillUnmount() {
-    window.removeEventListener('beforeunload', this.onUnmount, false);
+    // window.removeEventListener('beforeunload', this.onUnmount, false);
     this.onUnmount();
   }
 
@@ -51,12 +57,15 @@ class App extends Component {
   authenticateUser(data){
     const token = localStorage.getItem("token");
     if (token) {
+      console.log(data[0])
         this.setState({ auth: {user: data.user}});
+        localStorage.setItem("user", data.user)
       }
   }
 
   logoutUser() {
     localStorage.removeItem("token")
+    localStorage.removeItem("user")
     this.setState({
       auth: {user: {}}
     })

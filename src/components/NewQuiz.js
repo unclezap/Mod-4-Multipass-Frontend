@@ -24,8 +24,7 @@ class NewQuiz extends Component {
         ]
     }
 
-    handleSubmit = (e) => { 
-        e.preventDefault();
+    handleSubmit = () => { 
         api.quizzes.createQuiz(this.state)
         .then(data => {
             if (data.message) {
@@ -158,7 +157,7 @@ class NewQuiz extends Component {
     render() {
         return (
             <div>
-                <form onSubmit={e => this.handleSubmit(e)} onChange={this.handleChange} >
+                <form onSubmit={this.handleSubmit} onChange={this.handleChange} >
                     <label htmlFor="title">Title</label>
                     <input id="title" type="text" name="title" /> 
                     <label htmlFor="description">Description</label>
