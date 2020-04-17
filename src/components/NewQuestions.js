@@ -3,7 +3,8 @@ import NewAnswers from './NewAnswers';
 
 const NewQuestions = (props) => {
     
-    function handleClick(questionId) {
+    function handleClick(e, questionId) {
+        e.preventDefault()
         props.addAnswer(questionId)
     }
     
@@ -15,7 +16,7 @@ const NewQuestions = (props) => {
                     <label htmlFor="question">Question</label>
                     <input id={val.id} type="text" name="question" />
                 <NewAnswers answers={val.answers} qid={val.id}/>
-                <button onClick={() => handleClick(val.id)}>Add another answer</button>
+                <button onClick={(e) => handleClick(e, val.id)}>Add another answer</button>
                 </div>
             )
         })

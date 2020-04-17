@@ -25,6 +25,7 @@ class SignUp extends Component {
     };
     
     handleSubmit = e => {
+        e.preventDefault()
         let userObject = {
             username: this.state.fields.username,
             password: this.state.fields.password
@@ -35,8 +36,14 @@ class SignUp extends Component {
         } else {
             api.user.createUser(userObject);
             this.props.history.push('/');
+            if (localStorage.getItem("token")) {
+                // console.log("token is there")
+                this.props.easterEgg()
+            }
             alert("Account creation succesful. Log in with your new credentials.")
         };
+
+        
         
     }
 

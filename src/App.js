@@ -10,26 +10,34 @@ import MyAccount from './containers/MyAccount';
 import SignUp from './containers/SignUp'
 import Leaderboard from './containers/Leaderboard';
 import QuizScore from './components/QuizScore';
-
 import NewQuiz from './components/NewQuiz';
+import multi from './IMG/multi.gif'
 
+const multipassBackground = {
+   
+  backgroundImage: `url(${multi})`
+  
+}
 
-//Fetch calls here
 
 class App extends Component {
+
+
   constructor() {
     super();
     this.state = {
       auth: {
         user: {}
       },   
-      allQuizzes: []
+      allQuizzes: [],
+      multipass: {background: "white"}
     }
   };
 
   componentDidMount(){
     this.getQuizzes()
-    window.addEventListener('beforeunload', this.onUnmount, false)
+
+    // window.addEventListener('beforeunload', this.onUnmount, false)
   }
   
   onUnmount = () => {
@@ -37,7 +45,7 @@ class App extends Component {
   }
   
   componentWillUnmount() {
-    window.removeEventListener('beforeunload', this.onUnmount, false);
+    // window.removeEventListener('beforeunload', this.onUnmount, false);
     this.onUnmount();
   }
 
@@ -49,11 +57,18 @@ class App extends Component {
     );
   }
 
+  changeBodyBg(){
+    // console.log("hi")
+    this.setState({multipass: multipassBackground})
+}
+
   authenticateUser(data){
     const token = localStorage.getItem("token");
     if (token) {
         this.setState({ auth: {user: data.user}});
       }
+    // this.changeBodyBg()
+
   }
 
   logoutUser() {
@@ -63,10 +78,21 @@ class App extends Component {
     })
   }
 
+  updateAllQuizzes(data) {
+
+    this.setState((prev) => ({auth: prev.auth, allQuizzes: [...prev.allQuizzes, data]}
+        // const newAllQuizzes = prev.allQuizzes
+        // newAllQuizzes = {...prev.allQuizzes, data}
+        // const oldUser = prev.user
+        // return {allQuizzes: {...prev.allQuizzes, data}}
+    ))
+  }
+
   render() {
+
     return(
       <Router>
-        <div>
+        <div style={this.state.multipass}>
           <Navi
           onAuthenticate={this.authenticateUser.bind(this)} 
           onLogout={this.logoutUser.bind(this)}
@@ -83,12 +109,12 @@ class App extends Component {
 
           <Route 
             exact path="/browse"
-            render={() => <Browse allQuizzes={this.state.allQuizzes}/>}
+            render={() => <Browse allQuizzes={this.state.allQuizzes} styleProps={this.state.multipass}/>}
           />
           
           <Route 
             path={'/browse/:category'}
-            render={props => <Browse {...props} allQuizzes={this.state.allQuizzes.filter(quiz => quiz.category === props.match.params.category)}/>}
+            render={props => <Browse {...props} checkForMultipass={this.state.multipass.background} allQuizzes={this.state.allQuizzes.filter(quiz => quiz.category === props.match.params.category)}/>}
           />
 
           <Route
@@ -98,11 +124,11 @@ class App extends Component {
 
           <Route
             exact path={'/signup'}
-            render={props => <SignUp {...props} />}
+            render={props => <SignUp {...props} easterEgg={this.changeBodyBg.bind(this)} />}
           />
           <Route 
             path={'/quizzes/:id'}
-            render={props => <Quiz {...props} thisQuiz={props.match.url} />}
+            render={props => <Quiz {...props} thisQuiz={props.match.url} checkForMultipass={this.state.multipass.background}/>}
           />
 
           <Route 
@@ -117,9 +143,11 @@ class App extends Component {
 
           <Route 
             exact path="/new_quiz"
-            render={() => <NewQuiz />}
+            render={() => <NewQuiz quizMade={this.updateAllQuizzes.bind(this)}/>}
           />
-
+          <div style={this.state.multipass} style={{height: "300px"}}></div>
+          <div style={this.state.multipass} style={{height: "300px"}}></div>
+          <div style={this.state.multipass} style={{height: "300px"}}></div>
         </div>
       </Router>
     )
