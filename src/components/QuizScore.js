@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { api } from '../api';
+import {Redirect} from 'react-router-dom'
 
 class QuizScore extends Component {
     constructor() {
@@ -7,7 +8,8 @@ class QuizScore extends Component {
         this.state ={
             quiz: {},
             scores: {},
-            creator: ""
+            creator: "",
+            here: true
         }
     }
 
@@ -54,12 +56,21 @@ class QuizScore extends Component {
         )
     };
 
+    goBack = () => {
+        this.setState({here: false})
+    }
+
     render() {
         return (
             <div>
                 {this.renderQuizInfo()}
                 <h4>High Scores!</h4>
                 {this.renderScores()}
+                {this.state.here === true
+                    ? <button onClick={this.goBack}>
+                        Return to Leaderboard
+                      </button> 
+                    : <Redirect to="/leaderboard" />}
             </div>
             
         )
