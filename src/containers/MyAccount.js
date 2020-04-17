@@ -49,7 +49,7 @@ class MyAccount extends React.Component {
         return scoresArray.map((thisScore) => {
             return (
                 <Col>
-                    <QuizCard key={thisScore.quiz.id} quiz={thisScore.quiz}/>
+                    <QuizCard key={thisScore.quiz.id} quiz={thisScore.quiz} previousPage={"leaderboard"}/>
                     <h5>{`Score: ${thisScore.score}`}</h5>
                     <h6>{`Taken on ${thisScore.date}`}</h6>
                 </Col>
