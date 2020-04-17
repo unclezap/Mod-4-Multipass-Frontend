@@ -3,8 +3,6 @@ import NewQuestions from './NewQuestions';
 import { api } from '../api';
 import {Redirect} from 'react-router-dom'
 
-const API_ROOT = 'http://localhost:3000' 
-
 class NewQuiz extends Component {
 
     state = {
@@ -38,10 +36,8 @@ class NewQuiz extends Component {
                 console.log(data)
                 this.setState({here: false, newQuiz: data.id}) 
                 this.props.quizMade(data)
-                // return <Redirect to={"/quizzes/" + data.id}/>
             }
         })
-        
     }
 
     handleChange =(e) => {
@@ -162,21 +158,27 @@ class NewQuiz extends Component {
 
     render() {
         return (
-            <div>
+            <div className="container">
                 {this.state.here
                 ? <form onSubmit={(e) => this.handleSubmit(e)} onChange={this.handleChange} >
-                <label htmlFor="title">Title</label>
-                <input id="title" type="text" name="title" /> 
-                <label htmlFor="description">Description</label>
-                <input id="description" type="text" name="description" /> 
-                <label htmlFor="category">Category</label>
-                <input id="category" type="text" name="category" /> 
+                <div className="form-group">
+                    <label htmlFor="title">Title</label>
+                    <input className="form-control" style={{width:"30%"}} id="title" type="text" name="title"/> 
+                </div>
+                <div className="form-group">
+                    <label htmlFor="description">Description</label>
+                    <input id="description" className="form-control" style={{width:"30%"}} type="text" name="description" /> 
+                </div>
+                <div className="form-group">
+                    <label htmlFor="category">Category</label>
+                    <input id="category" className="form-control" style={{width:"30%"}} type="text" name="category" /> 
+                </div>
 
                 <NewQuestions questions={this.state.questions} addAnswer={this.addAnswer}/>
 
-                <button onClick={this.addQuestion}>Add another question</button>
+                <button className="btn btn-outline-primary" style={{marginRight:"10px"}} onClick={this.addQuestion}>Add another question</button>
 
-                <input type="submit" value="Make Quiz!"></input>
+                <input type="submit" className="btn btn-outline-primary" value="Make Quiz!"></input>
                  </form>
                 : <Redirect to={"/quizzes/" + this.state.newQuiz}/>}
                 
