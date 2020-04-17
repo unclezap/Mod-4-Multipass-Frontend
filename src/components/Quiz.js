@@ -55,8 +55,15 @@ class Quiz extends Component {
     // Need to get the state after adding checked answers. then post that.
     handleSubmit(e) {
         e.preventDefault()
-        const amountCorrect = Object.values(this.state.checkedAnswers).filter(answer=> answer === 'true')
-        alert(`You got ${amountCorrect.length} right!`)
+        let amountCorrect
+        if (this.props.checkForMultipass !== "white") {
+            alert("With Multipass, you always pass!  You got everything right!")
+            amountCorrect = Object.values(this.state.checkedAnswers).filter(answer => answer)
+            alert(`You got ${amountCorrect.length} right!`)
+        } else {
+            amountCorrect = Object.values(this.state.checkedAnswers).filter(answer=> answer === 'true')
+            alert(`You got ${amountCorrect.length} right!`)
+        }
         // post score to backend
         // redirect to gif page with 
     };

@@ -80,7 +80,7 @@ class App extends Component {
 
   updateAllQuizzes(data) {
 
-    this.setState((prev) => ({auth: prev.auth, allQuizzes: [...prev.allQuizzes, data]}
+    this.setState((prev) => ({auth: prev.auth, allQuizzes: [...prev.allQuizzes, data], multipass: prev.multipass}
         // const newAllQuizzes = prev.allQuizzes
         // newAllQuizzes = {...prev.allQuizzes, data}
         // const oldUser = prev.user
