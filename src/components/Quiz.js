@@ -44,13 +44,26 @@ class Quiz extends Component {
     handleSubmit(e) {
         e.preventDefault()
         let amountCorrect
+        let userScoreObject
         if (this.props.checkForMultipass !== "white") {
             alert("With Multipass, you always pass!  You got everything right!")
             amountCorrect = Object.values(this.state.checkedAnswers).filter(answer => answer)
             alert(`You got ${amountCorrect.length} right!`)
+            userScoreObject = {
+                score: amountCorrect.length,
+                quiz_id: this.state.quiz.id
+            }
+            api.userScores.createUserScore(userScoreObject);
         } else {
             amountCorrect = Object.values(this.state.checkedAnswers).filter(answer=> answer === 'true')
             alert(`You got ${amountCorrect.length} right!`)
+
+            userScoreObject = {
+                score: amountCorrect.length,
+                quiz_id: this.state.quiz.id
+            }
+            api.userScores.createUserScore(userScoreObject);
+            this.props.history.push('/');
         }
     };
 

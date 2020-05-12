@@ -11,6 +11,14 @@ const headers = () => {
     }
 }
 
+const createUserScore = (userScoreData) => {
+  return fetch(`${API_ROOT}/user_scores`, {
+    method: "POST",
+    headers: headers(),
+    body: JSON.stringify({user_score: userScoreData})
+  }).then(res => res.json())
+}
+
 const createUser = (data) => {
   return fetch(`${API_ROOT}/users`, {
     method: "POST",
@@ -84,5 +92,8 @@ export const api = {
   scores: {
       getUserScoresByQuiz,
       getUserScoresByUser
+  },
+  userScores: {
+    createUserScore
   }
 };
