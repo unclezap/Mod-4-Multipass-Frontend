@@ -11,7 +11,7 @@ class Quiz extends Component {
             user: "",
             checkedAnswers: {}
         }
-    };
+    }; 
 
     componentDidMount() {
         this.getQuestions(this.props);
