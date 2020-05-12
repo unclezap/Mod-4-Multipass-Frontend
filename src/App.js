@@ -145,9 +145,9 @@ class App extends Component {
             exact path="/new_quiz"
             render={() => <NewQuiz quizMade={this.updateAllQuizzes.bind(this)}/>}
           />
-          <div style={this.state.multipass} style={{height: "300px"}}></div>
-          <div style={this.state.multipass} style={{height: "300px"}}></div>
-          <div style={this.state.multipass} style={{height: "300px"}}></div>
+          <div style={this.state.multipass}></div>
+          <div style={this.state.multipass}></div>
+          <div style={this.state.multipass}></div>
         </div>
       </Router>
     )
