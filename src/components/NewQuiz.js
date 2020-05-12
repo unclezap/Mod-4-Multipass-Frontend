@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import NewQuestions from './NewQuestions';
 import { api } from '../api';
-import {Redirect} from 'react-router-dom'
+import {Redirect} from 'react-router-dom';
+import uuid from 'react-uuid';
+
 
 class NewQuiz extends Component {
 
@@ -124,11 +126,11 @@ class NewQuiz extends Component {
         e.preventDefault()
         this.setState((prev) => ({
             questions: [...prev.questions, {
-                id: Math.random().toString(36).replace(/[^a-z]+/g, "").substr(0,12),
+                id: uuid(),
                 text:"",
                 answers: [
                     {
-                        id: Math.random().toString(36).replace(/[^a-z]+/g, "").substr(0,12),
+                        id: uuid(),
                         question_text: "",
                         correct: false
                     }
@@ -144,7 +146,7 @@ class NewQuiz extends Component {
                     return thisQuestion
                 } else {
                     return {...thisQuestion, answers:[...thisQuestion.answers, {
-                        id: Math.random().toString(36).replace(/[^a-z]+/g, "").substr(0,12),
+                        id: uuid(),
                         answer_text: "",
                         correct: false
                     }]}
