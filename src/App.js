@@ -36,9 +36,10 @@ class App extends Component {
 
   componentDidMount(){
     this.getQuizzes()
+}
 
     // window.addEventListener('beforeunload', this.onUnmount, false)
-  }
+  
   
   onUnmount = () => {
     localStorage.removeItem("token")
@@ -58,8 +59,8 @@ class App extends Component {
   }
 
   changeBodyBg(){
-    // console.log("hi")
     this.setState({multipass: multipassBackground})
+    alert ("MULTIPASSS MODE")
 }
 
   authenticateUser(data){
@@ -67,8 +68,6 @@ class App extends Component {
     if (token) {
         this.setState({ auth: {user: data.user}});
       }
-    // this.changeBodyBg()
-
   }
 
   logoutUser() {
@@ -81,10 +80,6 @@ class App extends Component {
   updateAllQuizzes(data) {
 
     this.setState((prev) => ({auth: prev.auth, allQuizzes: [...prev.allQuizzes, data], multipass: prev.multipass}
-        // const newAllQuizzes = prev.allQuizzes
-        // newAllQuizzes = {...prev.allQuizzes, data}
-        // const oldUser = prev.user
-        // return {allQuizzes: {...prev.allQuizzes, data}}
     ))
   }
 
