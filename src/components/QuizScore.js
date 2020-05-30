@@ -18,9 +18,9 @@ class QuizScore extends Component {
     }
 
     getScores(props) {
-        api.scores.getUserScoresByQuiz(props.match.params.id)
+        api.scores.getUserScoresByQuiz(props.thisQuiz)
         .then(data =>
-                {   
+                {   console.log(data)
                     this.setState({
                         quiz: data.quiz,
                         scores: data.scores,
@@ -62,7 +62,7 @@ class QuizScore extends Component {
 
     render() {
         return (
-            <div>
+            <div class="text-center">
                 {this.renderQuizInfo()}
                 <h4>High Scores!</h4>
                 {this.renderScores()}

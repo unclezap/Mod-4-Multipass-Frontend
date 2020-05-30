@@ -3,11 +3,13 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { api } from '../api';
 import { Container, Row, Col } from 'react-bootstrap';
+import {Redirect} from 'react-router-dom';
 
 class SignUp extends Component {
     constructor(){
         super();
         this.state = {
+            signedUp: false,
             errors: false,
             fields: {
                 username: "",
@@ -35,12 +37,13 @@ class SignUp extends Component {
             alert("Passwords do not match. Please try again.")
         } else {
             api.user.createUser(userObject);
-            this.props.history.push('/');
+            // this.props.history.push('/');
+            console.log("hi")
             if (localStorage.getItem("token")) {
-                // console.log("token is there")
                 this.props.easterEgg()
             }
             alert("Account creation succesful. Log in with your new credentials.")
+            this.setState({signedUp: true})
         };
 
         
@@ -49,8 +52,8 @@ class SignUp extends Component {
 
     render() {
         return(
-            <Container>
-                <Row >
+             <Container>
+                {!this.state.signedUp ? <Row >
                     <Col xs={5}>
                         <Form onSubmit={e => this.handleSubmit(e)}>
                             <Form.Group >
@@ -92,8 +95,8 @@ class SignUp extends Component {
                             <Button type="submit" variant="primary">Submit</Button>
                         </Form>
                     </Col>
-                </Row>
-            </Container>
+                </Row> : <Redirect to="/"/>}
+            </Container> 
         )
     }
 }

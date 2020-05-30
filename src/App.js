@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { api } from './api'
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import TitleBar from './containers/TitleBar';
 import Navi from './containers/Navi';
 import Browse from './containers/Browse';
@@ -86,65 +86,69 @@ class App extends Component {
   render() {
 
     return(
-      <Router>
-        <div style={this.state.multipass}>
-          <Navi
+      <div>
+
+        <Router>
+        <Navi
           onAuthenticate={this.authenticateUser.bind(this)} 
           onLogout={this.logoutUser.bind(this)}
           />
-          <Route 
-            exact path="/" 
-            render={() => <TitleBar currentTitle="Home Page"/>} 
-          />
+        <div style={this.state.multipass}>
+      <Switch>
 
-          <Route
-            exact path="/account"
-            render={()=> <MyAccount user={this.state.auth.user} myQuizzes={this.state.allQuizzes.filter(quiz => quiz.user_id === this.state.auth.user.id)}/>}
-          />
+          <Route path="/account">
+            <MyAccount user={this.state.auth.user} myQuizzes={this.state.allQuizzes.filter(quiz => quiz.user_id === this.state.auth.user.id)}/>
+          </Route>
 
-          <Route 
-            exact path="/browse"
-            render={() => <Browse allQuizzes={this.state.allQuizzes} styleProps={this.state.multipass}/>}
-          />
+          {/* not using this route currently <Route path={'/browse/:category'}
+           render={({match}) => <Browse checkForMultipass={this.state.multipass.background} allQuizzes={this.state.allQuizzes.filter(quiz => quiz.category === match.params.category)}/>}
+          /> */}
           
-          <Route 
-            path={'/browse/:category'}
-            render={props => <Browse {...props} checkForMultipass={this.state.multipass.background} allQuizzes={this.state.allQuizzes.filter(quiz => quiz.category === props.match.params.category)}/>}
+          <Route path="/browse/"
+            render={({match}) => <Browse match={match} allQuizzes={this.state.allQuizzes} styleProps={this.state.multipass}/>}
           />
 
-          <Route
-            path={'/popular'}
-            render={() => <Popular allQuizzes={this.state.allQuizzes}/>}
+          <Route path={'/popular'} >
+            <Popular allQuizzes={this.state.allQuizzes}/>
+          </Route>
+
+          <Route path={'/signup'}>
+            <SignUp easterEgg={this.changeBodyBg.bind(this)} />
+          </Route>
+
+          <Route path={'/quizzes/:id'}
+            render={({match}) => <Quiz match={match} checkForMultipass={this.state.multipass.background}/>}
           />
 
-          <Route
-            exact path={'/signup'}
-            render={props => <SignUp {...props} easterEgg={this.changeBodyBg.bind(this)} />}
-          />
-          <Route 
-            path={'/quizzes/:id'}
-            render={props => <Quiz {...props} thisQuiz={props.match.url} checkForMultipass={this.state.multipass.background}/>}
+          <Route path={'/leaderboard/:id'}
+            render={({match}) => <QuizScore match={match} thisQuiz={match.params.id} />}
           />
 
-          <Route 
-            exact path="/leaderboard"
-            render={() => <Leaderboard allQuizzes={this.state.allQuizzes}/>}
-          />
+          <Route path="/leaderboard" >
+            {({match}) => {
+              if (match.isExact) {
+                return <Leaderboard match={match} allQuizzes={this.state.allQuizzes}/>
+              } else {
+                return null
+              }
+            }
+              }
+          </Route>
 
-          <Route 
-            path={'/leaderboard/:id'}
-            render={props => <QuizScore {...props} thisQuiz={props.match.url} />}
-          />
-
-          <Route 
-            exact path="/new_quiz"
-            render={() => <NewQuiz quizMade={this.updateAllQuizzes.bind(this)}/>}
-          />
+          <Route path="/new_quiz">
+            <NewQuiz quizMade={this.updateAllQuizzes.bind(this)}/>
+          </Route>
+          
+          <Route exact path="/"> 
+            <TitleBar currentTitle="Home Page"/>
+          </ Route>
           <div style={this.state.multipass}></div>
           <div style={this.state.multipass}></div>
           <div style={this.state.multipass}></div>
-        </div>
+      </Switch>
+      </div>
       </Router>
+      </div>
     )
   };
 };

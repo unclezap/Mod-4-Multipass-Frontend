@@ -5,9 +5,12 @@ import { Container, Row, Col } from 'react-bootstrap';
 function Leaderboard(props) {
 
     function allQuizzes() {
-        return props.allQuizzes.map((thisQuiz) => {
-            return (<Col><QuizCard key={thisQuiz.id} quiz={thisQuiz} previousPage={"leaderboard"}/></Col>)
-        })
+        // console.log(props.match, "YO!")
+        // if (props.match.isExact) {
+            return props.allQuizzes.map((thisQuiz) => {
+                return (<Col><QuizCard key={thisQuiz.id} quiz={thisQuiz} previousPage={"leaderboard"}/></Col>)
+            })
+        //  } 
     }
     
     return (

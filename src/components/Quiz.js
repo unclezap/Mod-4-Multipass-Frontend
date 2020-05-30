@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { api } from '../api';
-
+import {Redirect} from 'react-router-dom';
 
 class Quiz extends Component {
     constructor() {
         super();
         this.state ={
+            submitted: false,
             quiz: {},
             questions: {},
             user: "",
@@ -19,7 +20,8 @@ class Quiz extends Component {
 
     //Grab questions from backend on page render.
     getQuestions(props) {
-        api.quizzes.getQuiz(props.match.params.id).then(data =>
+        let id = parseInt(this.props.match.params.id)
+        api.quizzes.getQuiz(id).then(data =>
             {   
                 this.setState({
                     user: data.user,
@@ -45,6 +47,7 @@ class Quiz extends Component {
         e.preventDefault()
         let amountCorrect
         let userScoreObject
+        this.setState({submitted: true})
         if (this.props.checkForMultipass !== "white") {
             alert("With Multipass, you always pass!  You got everything right!")
             amountCorrect = Object.values(this.state.checkedAnswers).filter(answer => answer)
@@ -63,7 +66,7 @@ class Quiz extends Component {
                 quiz_id: this.state.quiz.id
             }
             api.userScores.createUserScore(userScoreObject);
-            this.props.history.push('/');
+            // this.props.history.push('/');
         }
     };
 
@@ -96,7 +99,7 @@ class Quiz extends Component {
 
     renderQuizInfo() {
         return(
-            <div>
+            <div >
                     <h2>{this.state.quiz.title}</h2>
                     <p>By: {this.state.user}</p>
             </div>
@@ -105,12 +108,14 @@ class Quiz extends Component {
 
     render() {
         return (
-            <div>
+            <div class="text-center">
+                {!this.state.submitted ?
+                <div>
                 {this.renderQuizInfo()}
                 <form name="quiz" className="form-group" onSubmit={e=>this.handleSubmit(e)}>
                     {this.renderQuestions()}
                     <input className="btn btn-outline-primary" type="submit" value="Get my Score!"/>
-                </form>
+                </form> </div>: <Redirect to="/Browse" />}
             </div>
         )
     }

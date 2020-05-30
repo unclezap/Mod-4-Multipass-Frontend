@@ -4,12 +4,11 @@ import Card from 'react-bootstrap/Card';
 
 
 
-function QuizCard(props) {
+const QuizCard = (props) => {
     const {title, description, category, id} = props.quiz
 
     return (
 
-        //note: fix the link for heroku functionality
         <Card style={props.styleProps} className="text-center">
             <Card.Title>{title}</Card.Title>
             <Card.Text >{description}</Card.Text>
