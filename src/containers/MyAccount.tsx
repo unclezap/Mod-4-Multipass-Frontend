@@ -4,31 +4,33 @@ import QuizCard from '../components/QuizCard';
 import { Col, Button } from 'react-bootstrap';
 import { api } from '../api';
 
-class MyAccount extends React.Component {
+type MyAccountProps = {
+    user: User
+}
 
-    state = {
-        quizClick: false,
-        scoreClick: false,
-        scores: {}
-    }
+const MyAccount: React.FC<MyAccountProps> = (props) => {
 
-    componentDidMount() {
-        this.getMyScores()
-    };
+    const [quizClick, setQuizClick] = React.useState<boolean>(false)
+    const [scoreClick, setScoreClick] = React.useState<boolean>(false)
+    const [scores, setScores] = React.useState({})
 
-    getMyScores() {
-        api.scores.getUserScoresByUser(this.props.user.id)
-        .then(data => {
-            this.setState({
-                scores: data
-            })
-        });
+    // componentDidMount() {
+    //     this.getMyScores()
+    // };
+
+    const getMyScores = () => {
+        api.scores.getUserScoresByUser(props.user.id)
+            .then(data => {
+                setScores({
+                    scores: data
+                })
+            });
     };
 
     quizToggle = () => {
         this.setState((prev) => ({
-                quizClick: !prev.quizClick
-            })
+            quizClick: !prev.quizClick
+        })
         );
     };
 
@@ -40,8 +42,8 @@ class MyAccount extends React.Component {
 
     seeMyQuizzes = () => {
         return this.props.myQuizzes.map((thisQuiz) => {
-                return (<Col><QuizCard key={thisQuiz.id} quiz={thisQuiz} previousPage={"quizzes"}/></Col>)
-            });
+            return (<Col><QuizCard key={thisQuiz.id} quiz={thisQuiz} previousPage={"quizzes"} /></Col>)
+        });
     };
 
     seeMyScores = () => {
@@ -49,7 +51,7 @@ class MyAccount extends React.Component {
         return scoresArray.map((thisScore) => {
             return (
                 <Col>
-                    <QuizCard key={thisScore.quiz.id} quiz={thisScore.quiz} previousPage={"leaderboard"}/>
+                    <QuizCard key={thisScore.quiz.id} quiz={thisScore.quiz} previousPage={"leaderboard"} />
                     <h5>{`Score: ${thisScore.score}`}</h5>
                     <h6>{`Taken on ${thisScore.date}`}</h6>
                 </Col>
@@ -60,13 +62,13 @@ class MyAccount extends React.Component {
     render() {
         const { username } = this.props.user;
 
-        return(
+        return (
             <div>
                 <h4>Username: {username}</h4>
                 <Button variant="outline-dark" onClick={this.quizToggle}>My Quizzes</Button>
                 {this.state.quizClick ? this.seeMyQuizzes() : null}
                 <Button variant="outline-dark" onClick={this.scoreToggle}>My Scores</Button>
-                {this.state.scoreClick ? this.seeMyScores(): null}
+                {this.state.scoreClick ? this.seeMyScores() : null}
             </div>
         );
     };
