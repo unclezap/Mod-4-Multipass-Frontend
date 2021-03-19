@@ -3,9 +3,21 @@ import AuthHOC from '../HOC/AuthHOC';
 import QuizCard from '../components/QuizCard';
 import { Col, Button } from 'react-bootstrap';
 import { api } from '../api';
+import { User, Quiz, Score } from '../types'
 
 type MyAccountProps = {
     user: User
+    myQuizzes: Quiz[]
+}
+
+type ScoreState = {
+    3: {
+        quiz: 'asdf'
+        score: 54
+        date: 3/4
+    }
+
+id: Score
 }
 
 const MyAccount: React.FC<MyAccountProps> = (props) => {
@@ -13,7 +25,9 @@ const MyAccount: React.FC<MyAccountProps> = (props) => {
     const [quizClick, setQuizClick] = React.useState<boolean>(false)
     const [scoreClick, setScoreClick] = React.useState<boolean>(false)
     const [scores, setScores] = React.useState({})
+    const { username } = props.user;
 
+    //TODO refactor to use effect
     // componentDidMount() {
     //     this.getMyScores()
     // };
@@ -27,31 +41,26 @@ const MyAccount: React.FC<MyAccountProps> = (props) => {
             });
     };
 
-    quizToggle = () => {
-        this.setState((prev) => ({
-            quizClick: !prev.quizClick
-        })
-        );
+    const quizToggle = () => {
+        setQuizClick(!quizClick)
     };
 
-    scoreToggle = () => {
-        this.setState((prev) => ({
-            scoreClick: !prev.scoreClick
-        }));
+    const scoreToggle = () => {
+        setScoreClick(!scoreClick);
     };
 
-    seeMyQuizzes = () => {
-        return this.props.myQuizzes.map((thisQuiz) => {
+    const seeMyQuizzes = () => {
+        return props.myQuizzes.map((thisQuiz: Quiz) => {
             return (<Col><QuizCard key={thisQuiz.id} quiz={thisQuiz} previousPage={"quizzes"} /></Col>)
         });
     };
 
-    seeMyScores = () => {
-        const scoresArray = Object.entries(this.state.scores).map(entry => entry[1])
-        return scoresArray.map((thisScore) => {
+    const seeMyScores = () => {
+        const scoresArray = Object.entries(scores).map(entry => entry[1])
+        return scoresArray.map((thisScore: Score) => {
             return (
                 <Col>
-                    <QuizCard key={thisScore.quiz.id} quiz={thisScore.quiz} previousPage={"leaderboard"} />
+                    <QuizCard key={thisScore.quizId} quiz={thisScore.quizId} previousPage={"leaderboard"} />
                     <h5>{`Score: ${thisScore.score}`}</h5>
                     <h6>{`Taken on ${thisScore.date}`}</h6>
                 </Col>
@@ -59,19 +68,15 @@ const MyAccount: React.FC<MyAccountProps> = (props) => {
         });
     };
 
-    render() {
-        const { username } = this.props.user;
-
-        return (
-            <div>
-                <h4>Username: {username}</h4>
-                <Button variant="outline-dark" onClick={this.quizToggle}>My Quizzes</Button>
-                {this.state.quizClick ? this.seeMyQuizzes() : null}
-                <Button variant="outline-dark" onClick={this.scoreToggle}>My Scores</Button>
-                {this.state.scoreClick ? this.seeMyScores() : null}
-            </div>
-        );
-    };
+    return (
+        <div>
+            <h4>Username: {username}</h4>
+            <Button variant="outline-dark" onClick={quizToggle}>My Quizzes</Button>
+            {quizClick ? seeMyQuizzes() : null}
+            <Button variant="outline-dark" onClick={scoreToggle}>My Scores</Button>
+            {scoreClick ? seeMyScores() : null}
+        </div>
+    );
 };
 
 export default AuthHOC(MyAccount);
